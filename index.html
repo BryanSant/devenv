@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevEnv Setup Scripts</title>
+    <!-- Importing JetBrains Mono as a Nerd Font base -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --container-bg: #161b22;
+            --text-color: #c9d1d9;
+            --accent-color: #58a6ff;
+            --secondary-text: #8b949e;
+            --code-bg: #010409;
+            --border-color: #30363d;
+            --terminal-red: #ff5f56;
+            --terminal-yellow: #ffbd2e;
+            --terminal-green: #27c93f;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+
+        main {
+            width: 90%;
+            max-width: 800px;
+            flex: 1;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .terminal {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .terminal-header {
+            background-color: var(--container-bg);
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 6px;
+            margin-right: 12px;
+        }
+
+        .dot {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+        }
+
+        .red { background-color: var(--terminal-red); }
+        .yellow { background-color: var(--terminal-yellow); }
+        .green { background-color: var(--terminal-green); }
+
+        .terminal-title {
+            font-size: 0.8rem;
+            color: var(--secondary-text);
+        }
+
+        .terminal-body {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .prompt {
+            color: var(--terminal-green);
+            margin-right: 8px;
+        }
+
+        footer {
+            width: 100%;
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--secondary-text);
+            border-top: 1px solid var(--border-color);
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5rem; }
+            main { width: 95%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>~/devenv-setup</h1>
+        <p>Automation scripts for new environments</p>
+    </header>
+
+    <main>
+        <section id="linux">
+            <h2>Linux (Ubuntu/Arch/Fedora)</h2>
+            <p>Bootstrap your Linux environment (Debian, Ubuntu, Arch, CachyOS, or Fedora) with a single command.</p>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="terminal-title">bash</div>
+                </div>
+                <div class="terminal-body">
+                    <pre><code><span class="prompt">$</span>curl -sSL https://raw.githubusercontent.com/user/devenv/main/devenv-setup.sh | bash</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="macos">
+            <h2>macOS</h2>
+            <p>Setup Homebrew, essential development tools, and your shell environment.</p>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <div class="terminal-title">zsh</div>
+                </div>
+                <div class="terminal-body">
+                    <pre><code><span class="prompt">%</span>curl -sSL https://raw.githubusercontent.com/user/devenv/main/devenv-setup.sh | bash</code></pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Developer Setup Scripts | Built with <a href="https://fonts.google.com/specimen/JetBrains+Mono">JetBrains Mono</a></p>
+    </footer>
+
+</body>
+</html>
