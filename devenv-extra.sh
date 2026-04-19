@@ -52,13 +52,54 @@ case "$DISTRO" in
     ;;
 esac
 
-# --- Docker (Linux Only) ---
-if [ "$DISTRO" != "macos" ]; then
-    echo "🐳 Installing Docker..."
+# --- Docker Installation ---
+IS_DESKTOP=false
+if [ "$DISTRO" = "macos" ]; then
+    IS_DESKTOP=true
+elif [ "$XDG_SESSION_TYPE" = "wayland" ] || [ -n "$WAYLAND_DISPLAY" ]; then
+    IS_DESKTOP=true
+fi
+
+if [ "$IS_DESKTOP" = "true" ]; then
+    echo "🖥️ Desktop environment detected. Installing Docker Desktop..."
+    case "$DISTRO" in
+      "macos")
+        if ! command -v docker &> /dev/null; then
+            brew install --cask docker
+        else
+            echo "✅ Docker already installed."
+        fi
+        ;;
+      "arch"|"cachyos")
+        if ! pacman -Qi docker-desktop &> /dev/null; then
+            yay -S --noconfirm docker-desktop
+        else
+            echo "✅ Docker Desktop already installed."
+        fi
+        ;;
+      "ubuntu"|"debian")
+        if ! dpkg -l docker-desktop &> /dev/null; then
+            echo "ℹ️ Please install Docker Desktop manually from: https://docs.docker.com/desktop/install/linux-install/"
+        else
+            echo "✅ Docker Desktop already installed."
+        fi
+        ;;
+      "fedora")
+        if ! rpm -q docker-desktop &> /dev/null; then
+            echo "ℹ️ Please install Docker Desktop manually from: https://docs.docker.com/desktop/install/linux-install/"
+        else
+            echo "✅ Docker Desktop already installed."
+        fi
+        ;;
+    esac
+else
+    echo "☁️ Headless system detected. Installing Docker and Docker Compose..."
     case "$DISTRO" in
       "ubuntu"|"debian")
         curl -fsSL https://get.docker.com | sh
         sudo usermod -aG docker $USER
+        # Docker Compose V2 is typically included in the official script or available as docker-compose-plugin
+        sudo apt-get install -y docker-compose-plugin
         ;;
       "arch"|"cachyos")
         yay -S --noconfirm docker docker-compose
