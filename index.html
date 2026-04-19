@@ -51,7 +51,7 @@
 
         main {
             width: 90%;
-            max-width: 800px;
+            max-width: 1024px;
             flex: 1;
         }
 
@@ -192,8 +192,9 @@
 <body>
 
     <header>
+        <div style="font-size: 4rem; margin-bottom: 1rem;">🤓</div>
         <h1>~/devenv-setup</h1>
-        <p>Automation scripts for new environments</p>
+        <p>Automation scripts for new local development environments</p>
     </header>
 
     <main>
@@ -272,6 +273,41 @@
                 }, 2000);
             });
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isMac = userAgent.includes('mac');
+            const isWindows = userAgent.includes('win');
+            
+            const linuxSection = document.getElementById('linux');
+            const linuxHeading = linuxSection.querySelector('h2');
+            const macSection = document.getElementById('macos');
+            const extraTerminalHeader = document.querySelector('#extra .terminal-header');
+            const extraTerminalTitle = document.querySelector('#extra .terminal-title');
+            const extraPrompt = document.querySelector('#extra .prompt');
+
+            if (isMac) {
+                linuxSection.style.display = 'none';
+                macSection.style.display = 'block';
+                
+                // Set Extra Tools to Mac style
+                extraTerminalHeader.classList.remove('linux');
+                extraTerminalTitle.textContent = 'zsh';
+                extraPrompt.textContent = '%';
+            } else {
+                linuxSection.style.display = 'block';
+                macSection.style.display = 'none';
+                
+                if (isWindows) {
+                    linuxHeading.textContent = 'WSL (Ubuntu/Arch/Fedora)';
+                }
+
+                // Set Extra Tools to Linux style
+                extraTerminalHeader.classList.add('linux');
+                extraTerminalTitle.textContent = 'bash';
+                extraPrompt.textContent = '$';
+            }
+        });
     </script>
 
 </body>
