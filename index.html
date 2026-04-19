@@ -82,16 +82,33 @@
             border-bottom: 1px solid var(--border-color);
         }
 
+        .terminal-header.linux {
+            justify-content: space-between;
+        }
+
         .terminal-buttons {
             display: flex;
             gap: 6px;
             margin-right: 12px;
         }
 
+        .terminal-header.linux .terminal-buttons {
+            margin-right: 0;
+            order: 2;
+        }
+
+        .terminal-header.linux .terminal-title {
+            order: 1;
+        }
+
         .dot {
             height: 12px;
             width: 12px;
             border-radius: 50%;
+        }
+
+        .terminal-header.linux .dot {
+            border-radius: 0;
         }
 
         .red { background-color: var(--terminal-red); }
@@ -159,11 +176,11 @@
             <h2>Linux (Ubuntu/Arch/Fedora)</h2>
             <p>Bootstrap your Linux environment (Debian, Ubuntu, Arch, CachyOS, or Fedora) with a single command.</p>
             <div class="terminal">
-                <div class="terminal-header">
+                <div class="terminal-header linux">
                     <div class="terminal-buttons">
-                        <div class="dot red"></div>
                         <div class="dot yellow"></div>
                         <div class="dot green"></div>
+                        <div class="dot red"></div>
                     </div>
                     <div class="terminal-title">bash</div>
                 </div>
