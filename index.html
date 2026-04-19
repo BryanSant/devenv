@@ -121,8 +121,33 @@
         }
 
         .terminal-body {
-            padding: 1rem;
+            padding: 2.5rem 1rem 1.5rem 1rem;
             overflow-x: auto;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: var(--container-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 4px 8px;
+            font-size: 0.7rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--border-color);
+        }
+
+        .copy-btn.copied {
+            border-color: var(--terminal-green);
+            color: var(--terminal-green);
         }
 
         pre {
@@ -185,7 +210,8 @@
                     <div class="terminal-title">bash</div>
                 </div>
                 <div class="terminal-body">
-                    <pre><code><span class="prompt">$</span>curl -sSL https://raw.githubusercontent.com/user/devenv/main/devenv-setup.sh | bash</code></pre>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    <pre><code><span class="prompt">$</span><span class="command">curl -sSL https://raw.githubusercontent.com/BryanSant/devenv/main/devenv-main.sh | bash</span></code></pre>
                 </div>
             </div>
         </section>
@@ -203,7 +229,27 @@
                     <div class="terminal-title">zsh</div>
                 </div>
                 <div class="terminal-body">
-                    <pre><code><span class="prompt">%</span>curl -sSL https://raw.githubusercontent.com/user/devenv/main/devenv-setup.sh | bash</code></pre>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    <pre><code><span class="prompt">%</span><span class="command">curl -sSL https://raw.githubusercontent.com/BryanSant/devenv/main/devenv-main.sh | bash</span></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="extra">
+            <h2>Extra Tools</h2>
+            <p>Install Docker, GitHub CLI, Gemini, Firebase, Terraform, k3d, Skaffold, and Google Cloud CLI.</p>
+            <div class="terminal">
+                <div class="terminal-header linux">
+                    <div class="terminal-buttons">
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                        <div class="dot red"></div>
+                    </div>
+                    <div class="terminal-title">bash</div>
+                </div>
+                <div class="terminal-body">
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                    <pre><code><span class="prompt">$</span><span class="command">curl -sSL https://raw.githubusercontent.com/BryanSant/devenv/main/devenv-extra.sh | bash</span></code></pre>
                 </div>
             </div>
         </section>
@@ -212,6 +258,21 @@
     <footer>
         <p>&copy; 2026 Developer Setup Scripts | Built with <a href="https://fonts.google.com/specimen/JetBrains+Mono">JetBrains Mono</a></p>
     </footer>
+
+    <script>
+        function copyToClipboard(btn) {
+            const command = btn.nextElementSibling.querySelector('.command').innerText;
+            navigator.clipboard.writeText(command).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
 
 </body>
 </html>

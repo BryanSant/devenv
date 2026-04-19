@@ -80,22 +80,25 @@ fi
 if [ ! -d "$HOME/.nvm" ]; then
   echo "🟢 Installing NVM..."
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 fi
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 # --- SDKMan (Software Development Kit Manager) ---
 if [ ! -d "$HOME/.sdkman" ]; then
   echo "☕ Installing SDKMan..."
   curl -s "https://get.sdkman.io" | bash
-  source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
+# Source SDKMan even if already installed
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # --- uv (Python Package Manager) ---
 if ! command -v uv &> /dev/null; then
   echo "🐍 Installing uv..."
   curl -LsSf https://astral.sh/uv/install.sh | sh
 fi
+# Add uv to path for the current script
+export PATH="$HOME/.local/bin:$PATH"
 
 # --- Starship.rs ---
 if ! command -v starship &> /dev/null; then
@@ -103,17 +106,29 @@ if ! command -v starship &> /dev/null; then
   curl -sS https://starship.rs/install.sh | sh -s -- -y
 fi
 
+# --- .zshrc Configuration ---
+echo "🐚 Configuring .zshrc..."
+if [ -f "$HOME/.zshrc" ]; then
+  echo "📦 Backing up existing .zshrc to ~/.zshrc.pre-devenv"
+  # Don't move if it's already a backup
+  if [ ! -f "$HOME/.zshrc.pre-devenv" ]; then
+      mv "$HOME/.zshrc" "$HOME/.zshrc.pre-devenv"
+  fi
+fi
+
+echo "📥 Downloading new .zshrc..."
+# Note: Replace the URL with your actual .zshrc location
+curl -sSL https://raw.githubusercontent.com/BryanSant/devenv/main/.zshrc -o "$HOME/.zshrc"
+
 # --- Tools & Languages ---
 
 # Node.js
 echo "🟢 Setting up Node.js..."
 nvm install --lts
-npm install -g @google/gemini-cli @angular/cli firebase-tools
+npm install -g @angular/cli
 
 # Java & Ecosystem
 echo "☕ Setting up Java ecosystem..."
-# Note: In a real script, we'd need to handle the JAVA_VERSION variable properly
-# For now, we'll install the latest LTS
 sdk install java || true
 JAVA_VERSION=$(java -version 2>&1 | head -n 1 | cut -d'"' -f2)
 sdk install java ${JAVA_VERSION}-graal || true
