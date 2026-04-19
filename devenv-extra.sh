@@ -42,7 +42,7 @@ case "$DISTRO" in
     && sudo apt install gh -y
     ;;
   "arch"|"cachyos")
-    sudo pacman -S --noconfirm github-cli
+    yay -S --noconfirm github-cli
     ;;
   "fedora")
     sudo dnf install -y gh
@@ -61,7 +61,7 @@ if [ "$DISTRO" != "macos" ]; then
         sudo usermod -aG docker $USER
         ;;
       "arch"|"cachyos")
-        sudo pacman -S --noconfirm docker docker-compose
+        yay -S --noconfirm docker docker-compose
         sudo systemctl enable --now docker.service
         sudo usermod -aG docker $USER
         ;;
@@ -90,7 +90,7 @@ case "$DISTRO" in
     sudo apt update && sudo apt install terraform
     ;;
   "arch"|"cachyos")
-    sudo pacman -S --noconfirm terraform
+    yay -S --noconfirm terraform
     ;;
   "fedora")
     sudo dnf install -y dnf-plugins-core
@@ -113,6 +113,9 @@ case "$DISTRO" in
   "macos")
     brew install skaffold
     ;;
+  "arch"|"cachyos")
+    yay -S --noconfirm skaffold-bin
+    ;;
   *)
     curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
     sudo install skaffold /usr/local/bin/
@@ -127,8 +130,7 @@ case "$DISTRO" in
     brew install --cask google-cloud-sdk
     ;;
   "arch"|"cachyos")
-    # Using AUR or manual install is common, but let's go with the script for consistency
-    curl https://sdk.cloud.google.com | bash --disable-prompts
+    yay -S --noconfirm google-cloud-cli
     ;;
   *)
     curl https://sdk.cloud.google.com | bash --disable-prompts
