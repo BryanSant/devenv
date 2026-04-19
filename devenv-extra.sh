@@ -114,12 +114,12 @@ else
     esac
 fi
 
-# --- Gemini & Firebase (NPM) ---
-echo "✨ Installing Gemini and Firebase CLI..."
+# --- Claude, Gemini & Firebase (NPM) ---
+echo "✨ Installing Claude, Gemini and Firebase CLI..."
 if command -v npm &> /dev/null; then
-    npm install -g @google/gemini-cli firebase-tools
+    npm install -g @anthropic-ai/claude-code @google/gemini-cli firebase-tools
 else
-    echo "⚠️ npm not found. Skipping Gemini and Firebase."
+    echo "⚠️ npm not found. Skipping Claude, Gemini and Firebase."
 fi
 
 # --- Terraform ---
