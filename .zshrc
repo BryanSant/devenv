@@ -1,6 +1,6 @@
 export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
-plugins=(git sudo zsh-autosuggests zsh-syntax-highlighting colored-man-pages)
+plugins=(git sudo direnv zsh-autosuggests zsh-syntax-highlighting colored-man-pages)
 export EDITOR="vim"
 
 # SDKMan
