@@ -32,11 +32,11 @@ case "$DISTRO" in
   "ubuntu"|"debian")
     echo "📦 Installing packages for Debian/Ubuntu..."
     sudo apt update
-    sudo apt install -y git git-lfs zip 7zip zoxide zsh vim micro curl build-essential
+    sudo apt install -y git git-lfs zip 7zip zoxide zsh vim micro curl build-essential direnv
     ;;
   "arch"|"cachyos")
     echo "📦 Installing packages for Arch/CachyOS..."
-    sudo pacman -Syu --noconfirm git git-lfs zip 7zip zoxide zsh vim micro curl base-devel
+    sudo pacman -Syu --noconfirm git git-lfs zip 7zip zoxide zsh vim micro curl base-devel direnv
 
     if ! command -v yay &> /dev/null; then
       echo "✨ Installing yay (AUR helper)..."
@@ -49,11 +49,11 @@ case "$DISTRO" in
     fi
 
     # Re-verify and use yay to ensure everything is up to date and install packages
-    yay -S --noconfirm git git-lfs zip 7zip zoxide zsh vim micro curl
+    yay -S --noconfirm git git-lfs zip 7zip zoxide zsh vim micro curl direnv
     ;;
   "fedora")
     echo "📦 Installing packages for Fedora..."
-    sudo dnf install -y git git-lfs zip 7zip zoxide zsh vim micro curl development-tools
+    sudo dnf install -y git git-lfs zip 7zip zoxide zsh vim micro curl development-tools direnv
     ;;
   "macos")
     echo "📦 Setting up macOS..."
@@ -65,7 +65,7 @@ case "$DISTRO" in
       eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
     fi
     echo "🍺 Installing packages via Homebrew..."
-    brew install git git-lfs zoxide vim micro sevenzip
+    brew install git git-lfs zoxide vim micro sevenzip direnv
     ;;
 esac
 
