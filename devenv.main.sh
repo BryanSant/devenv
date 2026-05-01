@@ -29,45 +29,16 @@ echo "Platform detected: $DISTRO"
 
 # --- System Package Installation ---
 case "$DISTRO" in
-  "ubuntu"|"debian")
-    echo "📦 Installing packages for Debian/Ubuntu..."
-    sudo apt update
-    sudo apt install -y git git-lfs zip 7zip zoxide zsh vim micro curl build-essential direnv
-    ;;
-  "arch"|"cachyos")
-    echo "📦 Installing packages for Arch/CachyOS..."
-    sudo pacman -Syu --noconfirm git git-lfs zip 7zip zoxide zsh vim micro curl base-devel direnv
-
-    if ! command -v yay &> /dev/null; then
-      echo "✨ Installing yay (AUR helper)..."
-      rm -rf /tmp/yay
-      git clone https://aur.archlinux.org/yay.git /tmp/yay
-      cd /tmp/yay
-      makepkg -si --noconfirm
-      cd -
-      rm -rf /tmp/yay
-    fi
-
-    # Re-verify and use yay to ensure everything is up to date and install packages
-    yay -S --noconfirm git git-lfs zip 7zip zoxide zsh vim micro curl direnv
-    ;;
-  "fedora")
-    echo "📦 Installing packages for Fedora..."
-    sudo dnf install -y git git-lfs zip 7zip zoxide zsh vim micro curl @development-tools direnv
-    ;;
-  "macos")
-    echo "📦 Setting up macOS..."
-    # Check for Homebrew
-    if ! command -v brew &> /dev/null; then
-      echo "🍺 Installing Homebrew..."
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      # Add brew to path for the rest of the script if it's a new install
-      eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
-    fi
-    echo "🍺 Installing packages via Homebrew..."
-    brew install git git-lfs zoxide vim micro sevenzip direnv
-    ;;
+  "ubuntu") DISTRO="debian" ;;
+  "cachyos") DISTRO="arch" ;;
 esac
+
+if [[ "$DISTRO" =~ ^(debian|arch|fedora|macos)$ ]]; then
+  echo "📥 Downloading and running platform-specific setup for $DISTRO..."
+  curl -sSL "https://raw.githubusercontent.com/BryanSant/devenv/main/devenv.main.${DISTRO}.sh" | bash
+else
+  echo "⚠️ No specific setup script for $DISTRO. Skipping platform-specific packages."
+fi
 
 # --- ZSH & Oh My Zsh ---
 if [ "$SHELL" != "$(which zsh)" ] && [ "$DISTRO" != "macos" ]; then
